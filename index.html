@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDGA Ratings Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 py-5">
+      <h1 class="text-2xl font-bold text-gray-900">Disc Golf Ratings</h1>
+      <p class="text-sm text-gray-500 mt-1">PDGA player rating analysis &amp; golf handicap equivalent</p>
+    </div>
+  </header>
+
+  <!-- Search -->
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <form id="search-form" class="flex gap-3 mb-8">
+      <input
+        id="pdga-input"
+        type="text"
+        inputmode="numeric"
+        pattern="\d+"
+        placeholder="Enter PDGA number (e.g. 49291)"
+        class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+               text-gray-900 placeholder-gray-400"
+        maxlength="7"
+        required
+      />
+      <button
+        type="submit"
+        class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold
+               rounded-lg shadow-sm transition-colors duration-150 focus:outline-none
+               focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+        Search
+      </button>
+    </form>
+
+    <!-- Loading indicator -->
+    <div id="loading" class="hidden text-center py-12">
+      <div class="inline-block w-8 h-8 border-4 border-blue-600 border-t-transparent
+                  rounded-full animate-spin"></div>
+      <p class="mt-3 text-gray-500 text-sm">Loading player data...</p>
+    </div>
+
+    <!-- Error state -->
+    <div id="error-msg" class="hidden bg-red-50 border border-red-200 text-red-700
+                               px-4 py-3 rounded-lg mb-6 text-sm"></div>
+
+    <!-- Results (hidden until data loads) -->
+    <div id="results" class="hidden space-y-6">
+
+      <!-- Player Profile Card -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 id="player-name" class="text-xl font-bold text-gray-900"></h2>
+            <p id="player-pdga" class="text-sm text-gray-500 mt-0.5"></p>
+            <p id="player-location" class="text-sm text-gray-600 mt-1"></p>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-gray-400 uppercase tracking-wide font-medium">PDGA Rating</p>
+            <p id="player-rating" class="text-3xl font-bold text-blue-600 mt-0.5"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Three Metric Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+          <p class="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">
+            Overall Average
+          </p>
+          <p id="metric-overall" class="text-2xl font-bold text-gray-900"></p>
+          <p class="text-xs text-gray-400 mt-1">All rated rounds</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+          <p class="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">
+            Tour Average
+          </p>
+          <p id="metric-tour" class="text-2xl font-bold text-indigo-600"></p>
+          <p class="text-xs text-gray-400 mt-1">Elite Series, Majors &amp; NT only</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+          <p class="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">
+            Handicap Equiv.
+          </p>
+          <p id="metric-handicap" class="text-2xl font-bold text-emerald-600"></p>
+          <p class="text-xs text-gray-400 mt-1">WHS formula, last 20 rounds</p>
+        </div>
+
+      </div>
+
+      <!-- Round History Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100">
+          <h3 class="text-sm font-semibold text-gray-700">Last 20 Rounds</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-100">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Date</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Event</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Tier</th>
+                <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wide">Rating</th>
+              </tr>
+            </thead>
+            <tbody id="rounds-tbody" class="divide-y divide-gray-50">
+              <!-- Rows injected by main.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /results -->
+  </main>
+
+  <footer class="max-w-4xl mx-auto px-4 py-6 text-center text-xs text-gray-400">
+    Data sourced from <a href="https://pdga.com" class="underline hover:text-gray-600">PDGA.com</a>.
+    Not affiliated with the PDGA.
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

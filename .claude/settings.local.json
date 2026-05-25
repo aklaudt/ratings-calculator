@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:web.archive.org)",
+      "WebFetch(domain:www.pdga.com)",
+      "WebFetch(domain:cheerio.js.org)",
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:stackoverflow.com)",
+      "WebFetch(domain:npmjs.com)",
+      "WebFetch(domain:handicap.golf)",
+      "WebFetch(domain:www.usga.org)",
+      "Bash(npm install *)",
+      "Bash(netlify --version)",
+      "Bash(npx netlify *)",
+      "Bash(curl -s 'http://localhost:35657/api/player?pdga=49291')",
+      "Bash(curl -s -H \"User-Agent: Mozilla/5.0\" 'https://www.pdga.com/player/75412/details')",
+      "Bash(pkill node *)",
+      "Read(//tmp/**)",
+      "Bash(git add *)"
+    ]
+  }
+}
