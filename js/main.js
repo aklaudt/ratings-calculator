@@ -116,7 +116,7 @@ function renderResults(data) {
   const nonTourCount = countNonTourRounds(data.rounds);
 
   document.getElementById('metric-overall').textContent = overall ?? 'N/A';
-  document.getElementById('metric-overall-subtitle').textContent = nonTourCount > 0 ? `${nonTourCount} non-tour event${nonTourCount !== 1 ? 's' : ''}` : 'All rated rounds';
+  document.getElementById('metric-overall-subtitle').textContent = nonTourCount > 0 ? `${nonTourCount} non-tour round${nonTourCount !== 1 ? 's' : ''}` : 'All rated rounds';
   document.getElementById('metric-tour').textContent = tour ?? 'No tour rounds found';
   document.getElementById('metric-handicap').textContent = handicap ?? 'N/A';
   document.getElementById('metric-stdev').textContent = stdDev ?? 'N/A';
