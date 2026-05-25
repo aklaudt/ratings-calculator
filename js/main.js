@@ -44,7 +44,7 @@ function calcOverallAverage(rounds) {
 }
 
 function calcTourAverage(rounds) {
-  const TOUR_TIERS = new Set(['ES', 'M', 'NT']);
+  const TOUR_TIERS = new Set(['ES', 'M', 'NT', 'XM']);
   const last12Months = filterLast12Months(rounds);
   const tourRounds = last12Months.filter(r => TOUR_TIERS.has(r.tier?.toUpperCase()));
   if (!tourRounds.length) return null;
@@ -53,7 +53,7 @@ function calcTourAverage(rounds) {
 }
 
 function countNonTourRounds(rounds) {
-  const TOUR_TIERS = new Set(['ES', 'M', 'NT']);
+  const TOUR_TIERS = new Set(['ES', 'M', 'NT', 'XM']);
   const last12Months = filterLast12Months(rounds);
   return last12Months.filter(r => !TOUR_TIERS.has(r.tier?.toUpperCase())).length;
 }
@@ -125,7 +125,7 @@ function renderResults(data) {
   tbody.innerHTML = '';
   const last20 = data.rounds.slice(0, 20);
 
-  const TOUR_TIERS = new Set(['ES', 'M', 'NT']);
+  const TOUR_TIERS = new Set(['ES', 'M', 'NT', 'XM']);
 
   last20.forEach(round => {
     const tr = document.createElement('tr');
