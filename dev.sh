@@ -40,4 +40,4 @@ echo "Test with player #75412 (Rich Ott)"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-npm run dev
+node dev-server.js

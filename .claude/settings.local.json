@@ -17,7 +17,8 @@
       "Bash(curl -s -H \"User-Agent: Mozilla/5.0\" 'https://www.pdga.com/player/75412/details')",
       "Bash(pkill node *)",
       "Read(//tmp/**)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(timeout 10 bash dev.sh)"
     ]
   }
 }
