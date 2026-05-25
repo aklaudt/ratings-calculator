@@ -52,10 +52,29 @@ function calcTourAverage(rounds) {
   return Math.round(sum / tourRounds.length);
 }
 
-function countNonTourRounds(rounds) {
+function calcOffTourAverage(rounds) {
+  const TOUR_TIERS = new Set(['ES', 'M', 'NT', 'XM']);
+  const last12Months = filterLast12Months(rounds);
+  const offTourRounds = last12Months.filter(r => !TOUR_TIERS.has(r.tier?.toUpperCase()));
+  if (!offTourRounds.length) return null;
+  const sum = offTourRounds.reduce((acc, r) => acc + r.rating, 0);
+  return Math.round(sum / offTourRounds.length);
+}
+
+function countTourRounds(rounds) {
+  const TOUR_TIERS = new Set(['ES', 'M', 'NT', 'XM']);
+  const last12Months = filterLast12Months(rounds);
+  return last12Months.filter(r => TOUR_TIERS.has(r.tier?.toUpperCase())).length;
+}
+
+function countOffTourRounds(rounds) {
   const TOUR_TIERS = new Set(['ES', 'M', 'NT', 'XM']);
   const last12Months = filterLast12Months(rounds);
   return last12Months.filter(r => !TOUR_TIERS.has(r.tier?.toUpperCase())).length;
+}
+
+function countTotalRounds(rounds) {
+  return filterLast12Months(rounds).length;
 }
 
 function filterLast12Months(rounds) {
@@ -111,13 +130,19 @@ function renderResults(data) {
 
   const overall = calcOverallAverage(data.rounds);
   const tour = calcTourAverage(data.rounds);
+  const offTour = calcOffTourAverage(data.rounds);
   const handicap = calcHandicapEquivalent(data.rounds);
   const stdDev = calcStandardDeviation(data.rounds);
-  const nonTourCount = countNonTourRounds(data.rounds);
+  const totalCount = countTotalRounds(data.rounds);
+  const tourCount = countTourRounds(data.rounds);
+  const offTourCount = countOffTourRounds(data.rounds);
 
   document.getElementById('metric-overall').textContent = overall ?? 'N/A';
-  document.getElementById('metric-overall-subtitle').textContent = nonTourCount > 0 ? `${nonTourCount} non-tour round${nonTourCount !== 1 ? 's' : ''}` : 'All rated rounds';
-  document.getElementById('metric-tour').textContent = tour ?? 'No tour rounds found';
+  document.getElementById('metric-overall-subtitle').textContent = `${totalCount} round${totalCount !== 1 ? 's' : ''}`;
+  document.getElementById('metric-tour').textContent = tour ?? 'N/A';
+  document.getElementById('metric-tour-subtitle').textContent = `${tourCount} tour round${tourCount !== 1 ? 's' : ''}`;
+  document.getElementById('metric-offtour').textContent = offTour ?? 'N/A';
+  document.getElementById('metric-offtour-subtitle').textContent = `${offTourCount} off-tour round${offTourCount !== 1 ? 's' : ''}`;
   document.getElementById('metric-handicap').textContent = handicap ?? 'N/A';
   document.getElementById('metric-stdev').textContent = stdDev ?? 'N/A';
 

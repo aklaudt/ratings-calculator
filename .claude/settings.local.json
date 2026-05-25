@@ -19,7 +19,8 @@
       "Read(//tmp/**)",
       "Bash(git add *)",
       "Bash(timeout 10 bash dev.sh)",
-      "Bash(pkill *)"
+      "Bash(pkill *)",
+      "Bash(curl -s 'http://localhost:8888/js/main.js')"
     ]
   }
 }
