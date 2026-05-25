@@ -52,6 +52,12 @@ function calcTourAverage(rounds) {
   return Math.round(sum / tourRounds.length);
 }
 
+function countNonTourRounds(rounds) {
+  const TOUR_TIERS = new Set(['ES', 'M', 'NT']);
+  const last12Months = filterLast12Months(rounds);
+  return last12Months.filter(r => !TOUR_TIERS.has(r.tier?.toUpperCase())).length;
+}
+
 function filterLast12Months(rounds) {
   const now = new Date();
   const oneYearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
@@ -107,8 +113,10 @@ function renderResults(data) {
   const tour = calcTourAverage(data.rounds);
   const handicap = calcHandicapEquivalent(data.rounds);
   const stdDev = calcStandardDeviation(data.rounds);
+  const nonTourCount = countNonTourRounds(data.rounds);
 
   document.getElementById('metric-overall').textContent = overall ?? 'N/A';
+  document.getElementById('metric-overall-subtitle').textContent = nonTourCount > 0 ? `${nonTourCount} non-tour event${nonTourCount !== 1 ? 's' : ''}` : 'All rated rounds';
   document.getElementById('metric-tour').textContent = tour ?? 'No tour rounds found';
   document.getElementById('metric-handicap').textContent = handicap ?? 'N/A';
   document.getElementById('metric-stdev').textContent = stdDev ?? 'N/A';
