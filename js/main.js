@@ -85,6 +85,18 @@ function calcHandicapEquivalent(rounds) {
   return Math.round(1000 - adjustedDiff);
 }
 
+function calcStandardDeviation(rounds) {
+  const last12Months = filterLast12Months(rounds);
+  if (last12Months.length < 2) return null;
+
+  const ratings = last12Months.map(r => r.rating);
+  const mean = ratings.reduce((acc, r) => acc + r, 0) / ratings.length;
+  const variance = ratings.reduce((acc, r) => acc + Math.pow(r - mean, 2), 0) / ratings.length;
+  const stdDev = Math.sqrt(variance);
+
+  return Math.round(stdDev * 100) / 100;
+}
+
 function renderResults(data) {
   document.getElementById('player-name').textContent = data.name;
   document.getElementById('player-pdga').textContent = `PDGA #${data.pdgaNumber}`;
@@ -94,10 +106,12 @@ function renderResults(data) {
   const overall = calcOverallAverage(data.rounds);
   const tour = calcTourAverage(data.rounds);
   const handicap = calcHandicapEquivalent(data.rounds);
+  const stdDev = calcStandardDeviation(data.rounds);
 
   document.getElementById('metric-overall').textContent = overall ?? 'N/A';
   document.getElementById('metric-tour').textContent = tour ?? 'No tour rounds found';
   document.getElementById('metric-handicap').textContent = handicap ?? 'N/A';
+  document.getElementById('metric-stdev').textContent = stdDev ?? 'N/A';
 
   const tbody = document.getElementById('rounds-tbody');
   tbody.innerHTML = '';

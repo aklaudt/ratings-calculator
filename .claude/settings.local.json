@@ -18,7 +18,8 @@
       "Bash(pkill node *)",
       "Read(//tmp/**)",
       "Bash(git add *)",
-      "Bash(timeout 10 bash dev.sh)"
+      "Bash(timeout 10 bash dev.sh)",
+      "Bash(pkill *)"
     ]
   }
 }
